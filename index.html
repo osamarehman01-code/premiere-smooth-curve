@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Premiere Smooth Curve</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- top bar -->
+    <header class="topbar">
+      <button class="icon-btn" id="btnHome" title="Reset to default curve">
+        <svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>
+      </button>
+      <div class="brand">
+        <span class="logo"><svg viewBox="0 0 24 24"><path d="M4 20 C 10 20, 14 4, 20 4"/></svg></span>
+        <span class="brand-name">Premiere Smooth Curve</span>
+        <span class="host-pill" id="hostPill" title="Premiere connection"><span class="dot"></span><span class="pr">Pr</span></span>
+      </div>
+      <div class="top-actions">
+        <button class="icon-btn" id="btnHelp" title="How it works">
+          <svg viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2 9 2 12 0v-5"/></svg>
+        </button>
+        <button class="icon-btn warn hidden" id="btnWarn" title="Last error">
+          <svg viewBox="0 0 24 24"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18v.5"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="body">
+      <!-- presets sidebar -->
+      <aside class="sidebar" id="sidebar">
+        <div class="search">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+          <input id="presetSearch" type="text" placeholder="Search for a preset" />
+        </div>
+        <div class="preset-list" id="presetList"></div>
+        <div class="sidebar-actions">
+          <button class="btn-save" id="btnSavePreset">Save as preset</button>
+          <button class="btn-link" id="btnImport">Import preset</button>
+          <button class="btn-link" id="btnLibrary">Open presets library</button>
+        </div>
+      </aside>
+
+      <!-- editor -->
+      <main class="editor">
+        <button class="collapse" id="btnCollapse" title="Hide presets">
+          <svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg>
+        </button>
+
+        <div class="clip-select" id="clipSelect">
+          <button class="clip-btn" id="clipBtn">
+            <span class="ring" id="clipRing"></span>
+            <span id="clipLabel">Select a clip</span>
+            <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="clip-menu hidden" id="clipMenu"></div>
+        </div>
+
+        <div class="graph-wrap" id="graphWrap">
+          <svg id="graph" class="graph" preserveAspectRatio="xMidYMid meet"></svg>
+        </div>
+
+        <div class="view-box">
+          <label class="chk"><input type="checkbox" id="chkSpeed" /><span class="sw speed"></span>Speed</label>
+          <label class="chk"><input type="checkbox" id="chkIndicator" /><span class="sw dotsw"></span>Speed indicator</label>
+          <div class="view-select">
+            <span class="sw value"></span>
+            <select id="viewMode">
+              <option value="value">Value</option>
+              <option value="speed">Speed graph</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="type-box">
+          <button class="icon-btn small" id="typePrev"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
+          <span id="typeName">Bezier</span>
+          <button class="icon-btn small" id="typeNext"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
+        </div>
+        <div class="param-box hidden" id="paramBox"></div>
+        <div class="bezier-readout" id="readout"></div>
+      </main>
+    </div>
+
+    <!-- bottom bar -->
+    <footer class="bottombar">
+      <div class="status">
+        <span id="statusText">No clip selected</span>
+        <span class="info" id="statusInfo" title="">i</span>
+        <button class="icon-btn small" id="btnRefresh" title="Refresh selection">
+          <svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14-5l-2 2M4 13a8 8 0 0 0 14 5l2-2"/><path d="M4 4v4h4M20 20v-4h-4"/></svg>
+        </button>
+      </div>
+      <div class="actions">
+        <button class="icon-btn" id="btnRemove" title="Remove smoothing (back to the original keyframes)">
+          <svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg>
+        </button>
+        <button class="icon-btn" id="btnUndo" title="Undo last apply">
+          <svg viewBox="0 0 24 24"><path d="M9 14l-5-5 5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/></svg>
+        </button>
+        <button class="icon-btn" id="btnReset" title="Reset curve">
+          <svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 3-6.2L4 8"/><path d="M4 3v5h5"/></svg>
+        </button>
+        <button class="icon-btn" id="btnSettings" title="Settings">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg>
+        </button>
+        <button class="btn-apply" id="btnApply" disabled>Apply</button>
+      </div>
+    </footer>
+
+    <!-- modals -->
+    <div class="modal hidden" id="modal">
+      <div class="modal-card">
+        <div class="modal-head"><span id="modalTitle"></span><button class="icon-btn small" id="modalClose">&times;</button></div>
+        <div class="modal-body" id="modalBody"></div>
+      </div>
+    </div>
+    <div class="toast hidden" id="toast"></div>
+  </div>
+
+  <script src="js/cep.js"></script>
+  <script src="js/easing.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
